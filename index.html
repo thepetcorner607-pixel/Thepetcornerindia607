@@ -14,7 +14,81 @@
 <meta name="description"
 content="The Pet Corner - Dogs, Cats, Pet Accessories, Vaccination and Pet Care Services in Salasar, Rajasthan.">
     <link rel="stylesheet" href="style.css">
+<!-- 3D Live Wallpaper -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
+<script>
+particlesJS("particles-js", {
+  particles: {
+    number: { value: 80 },
+    color: { value: "#25D366" },
+    shape: { type: "circle" },
+    size: { value: 4 },
+    move: { speed: 2 }
+  }
+});
+</script>
+<script>
+function toggleMenu() {
+    document.getElementById("nav-menu")
+    .classList.toggle("show");
+}
+</script>
+<script>
+function toggleVaccine() {
+    let x = document.getElementById("vaccination-details");
+
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+</script>
+    
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAu1dhufgDeO_FBHx2-DBAGw9ni1gcil68",
+  authDomain: "the-pet-corner.firebaseapp.com",
+  projectId: "the-pet-corner",
+  storageBucket: "the-pet-corner.firebasestorage.app",
+  messagingSenderId: "901958307495",
+  appId: "1:901958307495:web:f436983727ff70a0a25582"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function loadPets() {
+  const snapshot = await getDocs(collection(db, "Pets"));
+  const container = document.getElementById("pets-container");
+
+  snapshot.forEach((doc) => {
+    const pet = doc.data();
+
+    container.innerHTML += `
+      <div class="pet-card">
+        <h3>${pet.name}</h3>
+        <p>₹${pet.price}</p>
+        <p>${pet.age}</p>
+        <p>${pet.location}</p>
+        <a href="https://wa.me/91${pet.contact}">
+          Contact Seller
+        </a>
+      </div>
+    `;
+  });
+}
+
+loadPets();
+</script>
     <!-- Icons -->
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -173,81 +247,6 @@ href="https://wa.me/918000616511">
          class="vaccine-poster">
 </div>
 
-<!-- 3D Live Wallpaper -->
-<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
-<script>
-particlesJS("particles-js", {
-  particles: {
-    number: { value: 80 },
-    color: { value: "#25D366" },
-    shape: { type: "circle" },
-    size: { value: 4 },
-    move: { speed: 2 }
-  }
-});
-</script>
-<script>
-function toggleMenu() {
-    document.getElementById("nav-menu")
-    .classList.toggle("show");
-}
-</script>
-<script>
-function toggleVaccine() {
-    let x = document.getElementById("vaccination-details");
-
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
-}
-</script>
-    
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-import {
-  getFirestore,
-  collection,
-  getDocs
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAu1dhufgDeO_FBHx2-DBAGw9ni1gcil68",
-  authDomain: "the-pet-corner.firebaseapp.com",
-  projectId: "the-pet-corner",
-  storageBucket: "the-pet-corner.firebasestorage.app",
-  messagingSenderId: "901958307495",
-  appId: "1:901958307495:web:f436983727ff70a0a25582"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-async function loadPets() {
-  const snapshot = await getDocs(collection(db, "Pets"));
-  const container = document.getElementById("pets-container");
-
-  snapshot.forEach((doc) => {
-    const pet = doc.data();
-
-    container.innerHTML += `
-      <div class="pet-card">
-        <h3>${pet.name}</h3>
-        <p>₹${pet.price}</p>
-        <p>${pet.age}</p>
-        <p>${pet.location}</p>
-        <a href="https://wa.me/91${pet.contact}">
-          Contact Seller
-        </a>
-      </div>
-    `;
-  });
-}
-
-loadPets();
-</script>
     
 </body>
      </html>
